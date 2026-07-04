@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Paneli</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- LOGIN SAYFASI -->
+    <div id="loginWrap" class="login-wrap">
+        <div class="login-card">
+            <div class="login-logo">Admin Girişi</div>
+            <div class="login-sub">Halısaha Yönetim Paneli</div>
+
+            <div class="form-group">
+                <label class="form-label">E-posta</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="admin@halisaha.com" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Şifre</label>
+                <input type="password" id="loginSifre" class="form-input" placeholder="••••••••"
+                       onkeydown="if(event.key==='Enter') girisYap()" />
+            </div>
+            <div id="loginHata" style="color:#c0392b;font-size:13px;margin-bottom:12px;display:none;"></div>
+            <button class="btn-primary" onclick="girisYap()">GİRİŞ YAP</button>
+        </div>
+    </div>
+
+    <!-- ADMIN PANELİ -->
+    <div id="adminWrap" class="admin-layout" style="display:none;">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-logo" id="sidebarSahaAdi">HALISAHA</div>
+            <a class="sidebar-link active" onclick="sayfaGoster('dashboard')">📊 Dashboard</a>
+            <a class="sidebar-link" onclick="sayfaGoster('rezervasyonlar')">📅 Rezervasyonlar</a>
+            <a class="sidebar-link" onclick="sayfaGoster('ayarlar')">⚙️ Saha Ayarları</a>
+            <div class="sidebar-bottom">
+                <button class="btn-logout" onclick="cikisYap()">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <!-- İÇERİK -->
+        <div class="admin-content">
+
+            <!-- DASHBOARD -->
+            <div id="page-dashboard" class="admin-page active">
+                <div class="page-title">Dashboard</div>
+                <div class="stat-row">
+                    <div class="stat-card">
+                        <div class="stat-val" id="statBugunRez">—</div>
+                        <div class="stat-lbl">Bugün Rezervasyon</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statBugunGelir">—</div>
+                        <div class="stat-lbl">Bugün Gelir</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statHaftaGelir">—</div>
+                        <div class="stat-lbl">Bu Hafta Gelir</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Bugünkü Rezervasyonlar</div>
+                    <div id="dashRezList" class="rez-list">
+                        <div class="empty-state">Yükleniyor...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REZERVASYONLAR -->
+            <div id="page-rezervasyonlar" class="admin-page">
+                <div class="page-title">Rezervasyonlar</div>
+
+                <div class="card" style="margin-bottom:16px;">
+                    <div style="display:flex;gap:12px;align-items:end;">
+                        <div>
+                            <div class="field-label">Tarih Filtresi</div>
+                            <input type="date" id="filterTarih" class="form-input" style="width:180px;" />
+                        </div>
+                        <button class="btn-primary" style="width:auto;padding:11px 24px;font-size:15px;"
+                                onclick="rezervasyonlariYukle()">
+                            Filtrele
+                        </button>
+                    </div>
+                </div>
+
+                <div id="rezList" class="rez-list">
+                    <div class="empty-state">Yukarıdan tarih seçin.</div>
+                </div>
+
+                <!-- Manuel Rezervasyon Ekle -->
+                <div class="mini-form">
+                    <div class="mini-form-title">Manuel Rezervasyon Ekle (Ücretsiz)</div>
+                    <div class="mini-grid">
+                        <div>
+                            <div class="field-label">Ad Soyad</div>
+                            <input type="text" id="manAdSoyad" class="form-input" placeholder="İsim" />
+                        </div>
+                        <div>
+                            <div class="field-label">Tarih</div>
+                            <input type="date" id="manTarih" class="form-input" />
+                        </div>
+                        <div>
+                            <div class="field-label">Başlangıç Saati</div>
+                            <select id="manSaat" class="form-input">
+                                <option value="17">17:00</option>
+                                <option value="18">18:00</option>
+                                <option value="19">19:00</option>
+                                <option value="20">20:00</option>
+                                <option value="21">21:00</option>
+                                <option value="22">22:00</option>
+                                <option value="23">23:00</option>
+                            </select>
+                        </div>
+                        <button class="btn-green btn-sm" style="padding:11px 18px;font-size:13px;"
+                                onclick="manuelEkle()">
+                            + Ekle
+                        </button>
+                    </div>
+                    <div id="manuelMsg" style="margin-top:10px;font-size:13px;display:none;"></div>
+                </div>
+            </div>
+
+            <!-- AYARLAR -->
+            <div id="page-ayarlar" class="admin-page">
+                <div class="page-title">Saha Ayarları</div>
+                <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;" id="sahaSecici"></div>
+                <div class="card" style="max-width:500px;">
+                    <div class="form-group">
+                        <label class="form-label">Saha Adı</label>
+                        <input type="text" id="ayarAd" class="form-input" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Saatlik Ücret (₺)</label>
+                        <input type="text" id="ayarUcret" class="form-input" placeholder="3000" />
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div class="form-group">
+                            <label class="form-label">Açılış Saati</label>
+                            <select id="ayarAcilis" class="form-input">
+                                <option value="15">15:00</option>
+                                <option value="16">16:00</option>
+                                <option value="17" selected>17:00</option>
+                                <option value="18">18:00</option>
+                                <option value="19">19:00</option>
+                                <option value="20">20:00</option>
+                                <option value="21">21:00</option>
+                                <option value="22">22:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Kapanış Saati</label>
+                            <select id="ayarKapanis" class="form-input">
+                                <option value="23">23:00</option>
+                                <option value="24" selected>24:00</option>
+                                <option value="25">01:00</option>
+                                <option value="26">02:00</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

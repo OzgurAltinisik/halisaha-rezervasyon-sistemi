@@ -1,0 +1,1 @@
+﻿SELECT Id, Ad, SahaKodu FROM Sahalar ORDER BY Id;

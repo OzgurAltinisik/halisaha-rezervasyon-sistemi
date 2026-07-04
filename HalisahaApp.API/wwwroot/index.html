@@ -1,0 +1,594 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rezervasyon – HALISAHA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --green: #1a7a3c;
+            --green-light: #22a050;
+            --green-dark: #0f5228;
+            --accent: #c8f53e;
+            --bg: #f4f6f0;
+            --card: #fff;
+            --border: #dde8d0;
+            --text: #1a2212;
+            --muted: #6b7a5c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .site-header {
+            background: var(--green-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,.3);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+        }
+
+        .brand-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .brand-sub {
+            font-size: 10px;
+            color: rgba(255,255,255,.45);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(200,245,62,.12);
+            border: 1px solid rgba(200,245,62,.3);
+            color: var(--accent);
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .day-bar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 57px;
+            z-index: 90;
+        }
+
+        .day-bar-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .day-btn {
+            flex-shrink: 0;
+            padding: 7px 14px;
+            border-radius: 9px;
+            border: 1.5px solid var(--border);
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .15s;
+            text-align: center;
+        }
+
+            .day-btn:hover {
+                border-color: var(--green);
+                color: var(--green);
+            }
+
+            .day-btn.active {
+                background: var(--green);
+                color: white;
+                border-color: var(--green);
+            }
+
+            .day-btn .dname {
+                display: block;
+                font-weight: 700;
+            }
+
+            .day-btn .dnum {
+                display: block;
+                font-size: 11px;
+                opacity: .8;
+            }
+
+        .table-wrap {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 24px 40px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0,0,0,.07);
+            min-width: 600px;
+        }
+
+        thead tr {
+            background: var(--green-dark);
+        }
+
+        th {
+            padding: 14px 8px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+            th.th-saat {
+                font-family: 'Bebas Neue', sans-serif;
+                font-size: 13px;
+                color: var(--accent);
+                letter-spacing: 1px;
+                width: 90px;
+            }
+
+            th.th-saha {
+                font-family: 'Bebas Neue', sans-serif;
+                font-size: 17px;
+                color: white;
+                letter-spacing: 1px;
+                border-left: 1px solid rgba(255,255,255,.1);
+            }
+
+                th.th-saha .saha-num {
+                    display: block;
+                    font-size: 10px;
+                    color: rgba(255,255,255,.45);
+                    letter-spacing: 2px;
+                    font-family: 'DM Sans', sans-serif;
+                    font-weight: 400;
+                    margin-bottom: 2px;
+                }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+            tbody tr:last-child {
+                border-bottom: none;
+            }
+
+        td {
+            padding: 0;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+            td.td-saat {
+                padding: 11px 8px;
+                font-family: 'Bebas Neue', sans-serif;
+                font-size: 14px;
+                color: var(--muted);
+                background: #fafcf8;
+                border-right: 2px solid var(--border);
+                letter-spacing: .5px;
+                white-space: nowrap;
+            }
+
+            td.td-slot {
+                border-left: 1px solid var(--border);
+            }
+
+        .slot {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
+            transition: all .12s;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+            .slot.past {
+                background: #f5f5f5;
+                color: #bbb;
+                cursor: default;
+                font-style: italic;
+                font-size: 12px;
+            }
+
+            .slot.taken {
+                background: #f8f8f8;
+                color: #999;
+                cursor: default;
+                font-style: italic;
+                font-size: 12px;
+            }
+
+            .slot.free {
+                background: #eafaea;
+                color: var(--green);
+                font-weight: 700;
+            }
+
+                .slot.free:hover {
+                    background: var(--green);
+                    color: white;
+                }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,30,15,.7);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+            .modal-overlay.open {
+                display: flex;
+            }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+            animation: slideUp .2s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(24px);
+                opacity: 0
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: var(--green-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--muted);
+        }
+
+        .summary-box {
+            background: #f0faf3;
+            border: 1px solid #b8e6c8;
+            border-radius: 11px;
+            padding: 13px;
+            margin-bottom: 18px;
+        }
+
+        .sum-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 3px 0;
+        }
+
+            .sum-row.total {
+                font-weight: 700;
+                font-size: 15px;
+                border-top: 1px solid #b8e6c8;
+                margin-top: 7px;
+                padding-top: 7px;
+                color: var(--green-dark);
+            }
+
+        .sec-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .fg {
+            margin-bottom: 12px;
+        }
+
+        .fl {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .fi {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: 9px;
+            padding: 10px 13px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            outline: none;
+            transition: border .15s;
+        }
+
+            .fi:focus {
+                border-color: var(--green);
+            }
+
+        .row2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        .card-logos {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .clogo {
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+            .clogo.visa {
+                color: #1a1f71;
+            }
+
+            .clogo.mc {
+                background: linear-gradient(90deg,#eb001b,#f79e1b);
+                color: white;
+                border: none;
+            }
+
+            .clogo.troy {
+                color: #c8102e;
+            }
+
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: 11px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background .15s;
+            margin-top: 4px;
+        }
+
+            .btn-pay:hover {
+                background: var(--green-light);
+            }
+
+            .btn-pay:disabled {
+                background: #aaa;
+                cursor: not-allowed;
+            }
+
+        .secure-note {
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .pay-err {
+            color: #c0392b;
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .success-wrap {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .success-icon {
+            font-size: 52px;
+            margin-bottom: 12px;
+        }
+
+        .success-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 26px;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+        }
+
+        .success-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border);
+            border-top-color: var(--green);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            margin: 40px auto 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loading-msg {
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div>
+                <div class="brand-name" id="sahaAdi">HALISAHA</div>
+                <div class="brand-sub">Futbol Sahası Rezervasyon Sistemi</div>
+            </div>
+            <div class="status-badge"><div class="status-dot"></div> Saha Aktif</div>
+        </div>
+    </header>
+
+    <div class="day-bar">
+        <div class="day-bar-inner" id="dayBar"></div>
+    </div>
+
+    <div class="table-wrap">
+        <div id="tableContainer">
+            <div class="spinner"></div>
+            <div class="loading-msg">Yükleniyor...</div>
+        </div>
+    </div>
+
+    <!-- ÖDEME MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+
+            <div id="payForm">
+                <div class="modal-header">
+                    <div class="modal-title">Rezervasyon & Ödeme</div>
+                    <button class="modal-close" onclick="modalKapat()">✕</button>
+                </div>
+
+                <div class="summary-box" id="modalSummary"></div>
+
+                <div class="sec-title">Kişisel Bilgiler</div>
+                <div class="fg"><label class="fl">Ad Soyad</label><input type="text" id="fAdSoyad" class="fi" placeholder="Ahmet Yılmaz" /></div>
+                <div class="fg"><label class="fl">E-posta</label><input type="email" id="fEmail" class="fi" placeholder="ahmet@email.com" /></div>
+                <div class="fg"><label class="fl">Telefon</label><input type="tel" id="fTelefon" class="fi" placeholder="05xx xxx xx xx" /></div>
+
+                <div class="divider"></div>
+                <div class="sec-title">Kart Bilgileri</div>
+                <div class="card-logos">
+                    <div class="clogo visa">VISA</div>
+                    <div class="clogo mc">MC</div>
+                    <div class="clogo troy">TROY</div>
+                </div>
+
+                <div class="fg"><label class="fl">Kart Numarası</label><input type="text" id="fKartNo" class="fi" placeholder="0000 0000 0000 0000" maxlength="19" oninput="kartFmt(this)" /></div>
+                <div class="row2">
+                    <div class="fg"><label class="fl">Son Kullanma</label><input type="text" id="fSkt" class="fi" placeholder="AA/YY" maxlength="5" oninput="sktFmt(this)" /></div>
+                    <div class="fg"><label class="fl">CVV</label><input type="text" id="fCvv" class="fi" placeholder="•••" maxlength="3" oninput="this.value=this.value.replace(/\D/g,'')" /></div>
+                </div>
+                <div class="fg"><label class="fl">Kart Sahibinin Adı</label><input type="text" id="fKartIsim" class="fi" placeholder="AHMET YILMAZ" oninput="this.value=this.value.toUpperCase()" /></div>
+
+                <div class="pay-err" id="payErr"></div>
+                <button class="btn-pay" id="payBtn" onclick="odemeYap()">ÖDEME YAP</button>
+                <div class="secure-note">🔒 256-bit SSL ile güvenli ödeme</div>
+            </div>
+
+            <div id="paySuccess" style="display:none;">
+                <div class="success-wrap">
+                    <div class="success-icon">✅</div>
+                    <div class="success-title">Rezervasyon Tamamlandı!</div>
+                    <div class="success-desc" id="successDesc"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

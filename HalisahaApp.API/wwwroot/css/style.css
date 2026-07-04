@@ -1,0 +1,638 @@
+﻿:root {
+    --green: #1a7a3c;
+    --green-light: #22a050;
+    --green-dark: #0f5228;
+    --accent: #c8f53e;
+    --surface: #f7f9f4;
+    --card: #ffffff;
+    --border: #e2ead8;
+    --text: #1a2212;
+    --muted: #6b7a5c;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* HEADER */
+.site-header {
+    background: var(--green-dark);
+    padding: 22px 0;
+    margin-bottom: 28px;
+}
+
+    .site-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+.brand-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.brand-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 3px;
+}
+
+.header-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(200,245,62,0.15);
+    border: 1px solid rgba(200,245,62,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* LAYOUT */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding-bottom: 40px;
+}
+
+@media (max-width: 700px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.left-col, .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* CARD */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+/* TARİH LİSTESİ */
+.date-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.date-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+    line-height: 1.4;
+}
+
+    .date-btn:hover {
+        border-color: var(--green);
+    }
+
+    .date-btn.active {
+        background: var(--green);
+        color: white;
+        border-color: var(--green);
+    }
+
+    .date-btn .day-name {
+        font-weight: 700;
+        display: block;
+    }
+
+    .date-btn .day-num {
+        font-size: 11px;
+        opacity: .75;
+        display: block;
+    }
+
+/* SLOT GRID */
+.slots-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.slot {
+    padding: 12px 8px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: #eef6e8;
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+}
+
+    .slot:hover {
+        border-color: var(--green-light);
+        background: #e3f5ea;
+    }
+
+    .slot.taken {
+        background: #fdf0f0;
+        border-color: #f5c6c6;
+        cursor: not-allowed;
+    }
+
+    .slot.selected {
+        background: var(--green);
+        border-color: var(--green-dark);
+    }
+
+.slot-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    color: var(--green-dark);
+    letter-spacing: .5px;
+}
+
+.slot.taken .slot-time {
+    color: #c0392b;
+}
+
+.slot.selected .slot-time {
+    color: var(--accent);
+}
+
+.slot-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.slot.taken .slot-label {
+    color: #e08080;
+}
+
+.slot.selected .slot-label {
+    color: rgba(255,255,255,.7);
+}
+
+.loading-text {
+    color: var(--muted);
+    font-size: 13px;
+    grid-column: span 2;
+    text-align: center;
+    padding: 20px;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.form-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border .15s;
+}
+
+    .form-input:focus {
+        border-color: var(--green);
+    }
+
+/* ÖZET KUTU */
+.summary-box {
+    background: #f0faf3;
+    border: 1.5px solid #b8e6c8;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 4px 0;
+    color: var(--text);
+}
+
+    .summary-row.total {
+        font-weight: 700;
+        font-size: 15px;
+        border-top: 1px solid #b8e6c8;
+        margin-top: 8px;
+        padding-top: 8px;
+        color: var(--green-dark);
+    }
+
+/* UYARI KUTU */
+.warn-box {
+    background: #fffbea;
+    border: 1px solid #f7d070;
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-size: 12px;
+    color: #856404;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+/* BUTONLAR */
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+    .btn-primary:hover {
+        background: var(--green-light);
+    }
+
+    .btn-primary:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+/* SONUÇ MESAJI */
+#resultMsg {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+    #resultMsg.success {
+        background: #dcf5e3;
+        color: #1a7a3c;
+        border: 1px solid #b8e6c8;
+    }
+
+    #resultMsg.error {
+        background: #fdf0f0;
+        color: #c0392b;
+        border: 1px solid #f5c6c6;
+    }
+
+/* ---- ADMIN SAYFA ---- */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background: var(--green-dark);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding: 0 8px;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 9px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .15s;
+}
+
+    .sidebar-link:hover, .sidebar-link.active {
+        background: rgba(255,255,255,0.12);
+        color: white;
+    }
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.admin-content {
+    padding: 28px;
+    background: var(--surface);
+}
+
+.admin-page {
+    display: none;
+}
+
+    .admin-page.active {
+        display: block;
+    }
+
+.page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--green-dark);
+    margin-bottom: 20px;
+}
+
+/* STAT KARTLAR */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    color: var(--green-dark);
+}
+
+.stat-lbl {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* REZ LİSTESİ */
+.rez-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rez-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rez-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--green-dark);
+    min-width: 100px;
+    line-height: 1.1;
+}
+
+.rez-info {
+    flex: 1;
+}
+
+.rez-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.rez-detail {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.rez-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* BADGE */
+.badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.badge-paid {
+    background: #dcf5e3;
+    color: #1a7a3c;
+}
+
+.badge-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-cancelled {
+    background: #f5c6c6;
+    color: #c0392b;
+}
+
+/* KÜÇÜK BUTONLAR */
+.btn-sm {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all .15s;
+}
+
+.btn-red {
+    background: white;
+    color: #c0392b;
+    border-color: #f5c6c6;
+}
+
+    .btn-red:hover {
+        background: #fff0f0;
+    }
+
+.btn-green {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+}
+
+    .btn-green:hover {
+        background: var(--green-light);
+    }
+
+/* FORM KÜÇÜK */
+.mini-form {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 16px;
+}
+
+.mini-form-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+}
+
+.field-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* LOGIN SAYFASI */
+.login-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--green-dark);
+}
+
+.login-card {
+    background: white;
+    border-radius: 18px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+}
+
+.login-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+/* SELECT & INPUT */
+select, input[type=number] {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: white;
+    outline: none;
+}
+
+    select:focus, input[type=number]:focus {
+        border-color: var(--green);
+    }
+
+.divider {
+    height: 1px;
+    background: var(--border);
+    margin: 18px 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--muted);
+    font-size: 14px;
+}

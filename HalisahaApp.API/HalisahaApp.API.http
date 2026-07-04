@@ -1,0 +1,6 @@
+@HalisahaApp.API_HostAddress = http://localhost:5156
+
+GET {{HalisahaApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

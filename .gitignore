@@ -1,0 +1,21 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Visual Studio
+*.userosscache
+*.sln.docstates
+
+## Veritabanı
+*.mdf
+*.ldf
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log

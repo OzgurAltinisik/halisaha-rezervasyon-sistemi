@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Çözüm Öğeleri/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="HalisahaApp.API/HalisahaApp.API.csproj" />
+</Solution>
