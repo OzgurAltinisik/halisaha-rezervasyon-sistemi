@@ -5,16 +5,16 @@ Halısaha sahipleri için geliştirilmiş, kullanıcıların online rezervasyon 
 ## Ekran Görüntüleri
 
 ### Rezervasyon Sayfası
-![Rezervasyon Sayfası](screenshots/ss1.png)
+![Rezervasyon Sayfası](HalisahaApp.API/screenshots/ss1.png)
 
 ### Ödeme Formu
-![Ödeme Formu](screenshots/ss2.png)
+![Ödeme Formu](HalisahaApp.API/screenshots/ss2.png)
 
 ## Ödeme Onaylandı Sayfası
-![Ödeme Onaylandı](screenshots/ss3.png)
+![Ödeme Onaylandı](HalisahaApp.API/screenshots/ss3.png)
 
 ### Admin Paneli – Rezervasyonlar
-![Admin Rezervasyonlar](screenshots/ss4.png)
+![Admin Rezervasyonlar](HalisahaApp.API/screenshots/ss4.png)
 
 ## Özellikler
 
